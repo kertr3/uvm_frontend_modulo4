@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta del Clima</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 20px;
+        }
+        .weather {
+          margin-top: 20px;
+        }
+      </style>
+</head>
+<body>
+    <h1>Consulta del Clima</h1>
+  <form id="city-form">
+    <input type="text" id="city" placeholder="Ingresa la ciudad" required />
+    <button type="submit">Obtener clima</button>
+  </form>
+  <div class="weather" id="weather">
+    <!-- Dtos del clima -->
+  </div>
+
+  <script>
+    //  Otener el clima y actualizar la página
+    async function fetchWeather(city) {
+      const response = await fetch(`/weather?city=${city}`);
+      const data = await response.json();
+      const weatherDiv = document.getElementById('weather');
+      
+      if (data.current) {
+        weatherDiv.innerHTML = `
+          <h3>Clima en ${data.location.name}, ${data.location.country}</h3>
+          <p>Temperatura: ${data.current.temperature}°C</p>
+          <p>Condición: ${data.current.weather_descriptions[0]}</p>
+          <p>Humedad: ${data.current.humidity}%</p>
+        `;
+      } else {
+        weatherDiv.innerHTML = `<p>No se pudo obtener el clima. Intenta con otra ciudad.</p>`;
+      }
+    }
+
+    // Manejar el envío del formulario
+    document.getElementById('city-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const city = document.getElementById('city').value;
+      fetchWeather(city);
+    });
+  </script>
+</body>
+</html>
