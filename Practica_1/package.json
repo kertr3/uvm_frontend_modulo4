@@ -1,6 +1,6 @@
 {
-  
-  "description": "Este es un ejercicio",
+  "name": "notes-app",
+  "description": "Este es un ejercicio de notas",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,6 +8,7 @@
   "author": "Sergio Hernández",
   "license": "ISC",
   "dependencies": {
+    "validator": "^10.8.0",
     "yargs": "^17.2.1"
   }
 }
