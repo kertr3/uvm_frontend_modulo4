@@ -9,23 +9,59 @@
           font-family: Arial, sans-serif;
           text-align: center;
           padding: 20px;
+          background-color: #f4f4f4;
+        }
+        .container {
+          max-width: 400px;
+          margin: auto;
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         .weather {
           margin-top: 20px;
         }
+        .loading {
+          display: none;
+          font-size: 16px;
+          color: #555;
+        }
+        .links {
+          margin-top: 10px;
+          margin-bottom: 15px;
+          font-size: 16px;
+        }
+        .links a {
+          color: #007BFF;
+          text-decoration: none;
+          margin: 0 10px;
+        }
+        .links a:hover {
+          text-decoration: underline;
+        }
       </style>
 </head>
 <body>
+  <div class="container">
     <h1>Consulta del Clima</h1>
-  <form id="city-form">
-    <input type="text" id="city" placeholder="Ingresa la ciudad" required />
-    <button type="submit">Obtener clima</button>
-  </form>
-  <div class="weather" id="weather">
+    <div class="links">
+        <a href="#" id="conocenos" target="_blank">Conócenos</a>
+        <a href="#" id="ayuda" target="_blank">Ayuda</a>
+    </div>
+    <form id="city-form">
+        <input type="text" id="city" placeholder="Ingresa la ciudad" required aria-label="Ciudad" />
+        <button type="submit">Consultar</button>
+    </form>
+    <p class="loading" id="loading">Cargando...</p>
+    <div class="weather" id="weather">
     <!-- Dtos del clima -->
   </div>
 
   <script>
+    // Configurar enlaces de Conócenos y Ayuda
+    document.getElementById('conocenos').href = "https://weatherstack.com/";
+      document.getElementById('ayuda').href = "https://weatherstack.com/faq";
     //  Otener el clima y actualizar la página
     async function fetchWeather(city) {
       const response = await fetch(`/weather?city=${city}`);
@@ -35,7 +71,7 @@
       if (data.current) {
         weatherDiv.innerHTML = `
           <h3>Clima en ${data.location.name}, ${data.location.country}</h3>
-          <p>Temperatura: ${data.current.temperature}°C</p>
+          <p>Temperatura actual: ${data.current.temperature}°C</p>
           <p>Condición: ${data.current.weather_descriptions[0]}</p>
           <p>Humedad: ${data.current.humidity}%</p>
         `;
